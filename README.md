@@ -2,7 +2,7 @@
 
 URL:https://shrouded-anchorage-17907.herokuapp.com/
 
-## Wthat
+## Expla
 Creating story like Shakespeare AI!
 
 But, Free plan in Heroku cause this AI can create about 100 characters. This is too short to read story. 
