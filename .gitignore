@@ -1,4 +1,3 @@
 #.pthファイルはgitに送らない, !train.pthとかにするとtrain.pthだけは読み込まれる
 *.pth
 .env/
-.gitignore
