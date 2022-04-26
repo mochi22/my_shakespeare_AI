@@ -1,0 +1,29 @@
+h1 {
+    color: blue;
+    border-bottom: double 6px #87CEFA;
+}
+
+.main{
+    width: auto;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    /*margin: auto;*/
+    /*background-color: rgb(220, 221, 241);*/
+}
+
+.container {
+    background-color: rgb(224, 224, 254);
+    padding-top: 10px;
+    padding-bottom: 10px;
+    width: auto;
+    text-align : center;
+    border: 2px solid rgb(99, 67, 113);
+    /*border-bottom: double 6px #87CEFA;*/
+}
+
+.result{
+    background-color: white;
+    border: 1px solid rgb(99, 67, 113);
+    margin-bottom:10px;
+    width: auto;
+}

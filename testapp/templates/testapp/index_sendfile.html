@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <title>My Page!</title>
+
+  <script type="text/javascript" language="javascript">
+        function onButtonClick() {
+          target = document.getElementById("output");
+          target.innerText = document.forms.id_form1.id_textBox1.value;
+          //target.innerText = document.id_form1.id_textBox1.value;//これでもOK
+        }
+  </script>
+
+</head>
+<body>
+  <form name="form1" id="id_form1" action="">
+    <input name="textBox1" id="id_textBox1" type="text" value="" />
+    <input type="button" value="Exec" onclick="onButtonClick();" />
+  </form>
+  <hr/>
+  <div id="output"></div>
+
+  <div>
+    <h2>This is my page!!!!</h2>
+  </div>
+  <form name="send" id="id_send" action=""> 
+    <label />名前：<input type="text" id="id_nameText" />
+    <input type="button" value="Check" id="checkButton" onclick="onButtonClick();" />
+  </form>         
+  <div>
+    <h3 />Loding File!
+    <form>
+      <input type='file' id='id_sendfile' />
+    </form>  
+  </div> 
+  <hr/>
+  <div id="output"></div>
+
+</body>
+</html>

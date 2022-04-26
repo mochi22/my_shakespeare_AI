@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container">
+    <h2>Using GPU !!!</h2>
+    <p>If not using GPU, click botton<a href="{{ url_for('index') }}">CPU</a></p>
+    <h2>AI auto making story</h2>
+    <p>Enter some words, and click submit botton.</p>
+    <p>Please wait about five minites or more</p>
+    <form action="/GPU" method="POST">
+        <input name="input"></input>
+        <button type="submit">submit</button>
+    </form>
+
+</div>
+<script src="{{ url_for('static', filename='javascript/sample.js') }}"></script>
+{% endblock %}
