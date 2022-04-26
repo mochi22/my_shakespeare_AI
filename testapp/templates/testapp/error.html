@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+<header>
+    <title>Error</title>
+</header>
+{% block content %}
+<div class="container mt-4">
+    <h2>Error occurred</h2>
+    <p>Using {{ DEVICE }}. But you choice another. So, this error occured. Prease choice another.</p>
+    <p><a href="{{ url_for('index') }}">CPU</a></p> <!--viewsの関数名を指定するのに注意すべし-->
+    <p><a href="{{ url_for('index_GPU') }}">GPU</a></p>
+</div>
+{% endblock %}
