@@ -1,5 +1,5 @@
 from testapp import app
-from flask import render_template, request, make_response
+from flask import render_template, request, make_response, Markup
 from testapp.auto_story import CharDataset, Args, GPT, LTConfig, LanguageTrainer, My_story
 import os
 def prepare_response(data):#セキュリティ対策
@@ -11,15 +11,13 @@ def prepare_response(data):#セキュリティ対策
     response.headers['X-XSS-Protection'] = '1; mode=block' #ブラウザのセキュリティ機能を利用してXSS攻撃を抑えるものです。しかしながら完全ではなく、また思わぬ誤作動の危険性もあります。とりあえず設定しておけばいいというものではない。
     return response
 
-STEPS=150 #ここで取り出す文の長さを調節する。だいたいこの数値分の文字数出力する。
+STEPS=100 #ここで取り出す文の長さを調節する。だいたいこの数値分の文字数出力する。
 block_size = 128 #128から変更できない # コンテクストの長さ
 dire = os.getcwd()
 work_dir = dire+'/testapp/world_model_lec6/'
 # 事前学習用データセット. ファイルは1.1MB程度です.
 text = open(work_dir+'shakespeare.txt', 'r').read()
 train_dataset = CharDataset(text, block_size)
-#print(f"train_dataset.vocab_size:{train_dataset.vocab_size}") #65
-#print(f"train_dataset.block_size:{train_dataset.block_size}") #128
 args = Args({
         'vocab_size': train_dataset.vocab_size,
         'block_size': train_dataset.block_size,
@@ -36,6 +34,14 @@ tconf = LTConfig(max_epochs=2, batch_size=256, learning_rate=6e-4,
                 num_workers=2)
 trainer = LanguageTrainer(model, train_dataset, None, tconf)
 
+#独自のフィルター設定
+@app.template_filter( "linebreaksbr" )
+def func_linebreaksbr( linebreaksbr ) :
+    return Markup(linebreaksbr.replace("\n", "<br />\n"))
+
+@app.template_filter( "deln" )
+def func_linebreaksbr( deln ) :
+    return Markup(deln.replace("\n", ""))
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -46,25 +52,26 @@ def index():
     if request.method=='POST':
         print("Posted!!!")
         req1 = request.form['input']
+        print("sub:",req1)
         DEVICE = 'cpu'
-        try:
-            story = My_story(model=model, train_dataset=train_dataset, trainer=trainer,Input=req1, Work_dir=work_dir, GPU=False,STEPS=STEPS)
-        except IndexError:
-            print("IndexError")
-            return 'Error occurred "Blank". Please fill out.'
-        except KeyError:
-            print("KeyError")
-            return 'Error occured "Not half-width alphanumeric characters".Please fill out using half-width alphanumeric characters.'
-        except Exception as e:
-            print("Error:",e)
-            #import traceback
-            #traceback.print_exc()
-            response_body = render_template('testapp/error.html',DEVICE=DEVICE)
-            response = prepare_response(response_body)
-            return response
-        response_body = render_template('testapp/result.html',req=req1,story=story)
+    try:
+        story = My_story(model=model, train_dataset=train_dataset, trainer=trainer,Input=req1, Work_dir=work_dir, GPU=False,STEPS=STEPS)
+    except IndexError:
+        print("IndexError")
+        return 'Error occurred "Blank". Please fill out.'
+    except KeyError:
+        print("KeyError")
+        return 'Error occured "Not half-width alphanumeric characters".Please fill out using half-width alphanumeric characters.'
+    except Exception as e:
+        print("Error:",e)
+        #import traceback
+        #traceback.print_exc()
+        response_body = render_template('testapp/error.html',DEVICE=DEVICE)
         response = prepare_response(response_body)
         return response
+    response_body = render_template('testapp/result.html',req=req1,story=story)
+    response = prepare_response(response_body)
+    return response
 
 
 @app.route('/GPU', methods=['GET', 'POST'])

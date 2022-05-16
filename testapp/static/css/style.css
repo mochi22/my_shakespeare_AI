@@ -26,4 +26,6 @@ h1 {
     border: 1px solid rgb(99, 67, 113);
     margin-bottom:10px;
     width: auto;
+    padding: auto;
+    text-align: left;
 }

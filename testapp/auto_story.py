@@ -1,15 +1,3 @@
-'''
-!pip install git+https://github.com/takuseno/d4rl-pybullet
-!pip install typed-argument-parser
-!apt update
-!apt install xvfb
-!pip install gym-notebook-wrapper
-'''
-#import os
-
-#os.chdir(work_dir) #カレントディレクトリをここにするやつ
-#print(os.getcwd())
-
 import random
 import math
 import numpy as np
@@ -25,11 +13,6 @@ from testapp.world_model_lec6.utils_language import Trainer as LanguageTrainer
 from testapp.world_model_lec6.utils_language import TrainerConfig as LTConfig
 from testapp.world_model_lec6.utils_language import sample
 
-#import gym
-#from gym.envs.registration import register
-#import d4rl_pybullet
-#import gnwrapper
-#from IPython.display import HTML
 from base64 import b64encode
 from testapp.world_model_lec6.utils_rl import (
     #Config, DiscretizedDataset,
@@ -290,29 +273,7 @@ class CharDataset(Dataset):
         y = torch.tensor(dix[1:], dtype=torch.long)
         return x, y
 
-'''
-block_size = 128 # コンテクストの長さ
-dire = os.getcwd()
-work_dir = dire+'/testapp/world_model_lec6/'
-# 事前学習用データセット. ファイルは1.1MB程度です.
-text = open(work_dir+'shakespeare.txt', 'r').read()
-train_dataset = CharDataset(text, block_size)
-args = Args({
-        'vocab_size': train_dataset.vocab_size,
-        'block_size': train_dataset.block_size,
-        'n_layer': 8,
-        'n_head': 8,
-        'n_embd': 512,
-        'rl': False, # Trajectory Transformerで行う処理を飛ばす
-    })
-model=GPT(args) # あとでtrainerがモデルをGPUに移してくれます.
-    # LanguageTrainerをインスタンス化し, 訓練を開始します.
-    # batch_sizeを512にするとメモリ不足になります.
-tconf = LTConfig(max_epochs=2, batch_size=256, learning_rate=6e-4,
-                lr_decay=True, warmup_tokens=512*20, final_tokens=2*len(train_dataset)*block_size,
-                num_workers=2)
-trainer = LanguageTrainer(model, train_dataset, None, tconf)
-'''
+
 def My_story(model, train_dataset, trainer,Input='This is input', Work_dir='', Top_k=10, GPU=True, STEPS=1000):
     model_path = Work_dir + '/trained_language_model.pth'
     # (英語で)自由に書いてみてください. 続きを生成してくれます.

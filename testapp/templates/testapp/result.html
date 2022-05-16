@@ -5,10 +5,20 @@
     <h2>You Send:{{ req }}</h2>
     <p>AI create story like shakespeare</p>
     <div class="result">
-        {{ story }}
+        {{ story | linebreaksbr }}
     </div>
 
     <p>Go back</p>
-    <p><a href="{{ url_for('index') }}">CPU</a></p> <!--viewsの関数名を指定するのに注意すべし-->
+    <p><a href="{{ url_for('index') }}">CPU</a></p> <!--views.pyの関数名を指定するのに注意すべし-->
 </div>
+<!-- 
+<div>
+    <p>If click again, you get more words!</p>
+    {% set story = story %} 
+    <form action="/" method="POST">
+        <input type="hidden" name="input" value="{{ story | deln }}" />
+        <button type="submit">submit</button>
+    </form>
+</div>
+-->
 {% endblock %}
